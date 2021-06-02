@@ -1,0 +1,36 @@
+<style>
+  .pagination {
+    display: inline-block;
+  }
+
+  .pagination a {
+    background-color: #fff;
+    color: black;
+    font-weight: bold;
+    float: left;
+    padding: 12px 20px;
+    margin: 8px;
+    text-decoration: none;
+    transition: background-color .3s;
+    border: 1px solid #ddd;
+  }
+
+  .pagination a:hover {background-color: #ddd;}
+</style>
+
+<div class="row">
+  <div class="col-sm-6 mt-2 mb-2" ng-repeat="sub in subjects |limitTo:4:start">
+    <a href="#!tracnghiem/{{sub.Id}}/{{sub.Name}}" style="text-decoration: none; color: black;">
+      <div class="card text-center border-warning">
+        <img src="images/logos/{{sub.Logo}}" class="m-auto">
+        <div class="card-footer">{{sub.Name}}</div>
+      </div>
+    </a>
+  </div>
+  <div class="pagination m-auto">
+    <a ng-click="First()"><i class="fas fa-angle-double-left"></i></a>
+    <a ng-click="Previous()"><i class="fas fa-angle-left"></i></a>
+    <a ng-click="Next()"><i class="fas fa-angle-right"></i></a>
+    <a ng-click="Last()"><i class="fas fa-angle-double-right"></i></a>
+  </div>
+</div>

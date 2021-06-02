@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/trangchu.css">
+  <link rel="stylesheet" href="fontawesome-free-5.15.3-web/css/all.css">
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+  <script src="js/angular.min.js"></script>
+  <script src="js/angular-route.js"></script>
+  <title>Trắc nghiệm Online</title>
+</head>
+<body ng-app="myapp" ng-controller="asm">
+  <div class="container">
+    <header class="row">
+      <img class="ml-auto w-100 h-100" src="images/banner.jpg">
+    </header>
+
+    <!--Navbar-->
+    <nav class="row" ng-controller="trangThaiCtrl">
+      <nav class="navbar navbar-expand-lg navbar-light w-100">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a href="#" class="nav-link">
+                FPT Polytechnic <span class="sr-only">(current)</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#!gioithieu" class="nav-link">
+                <i class="fas fa-info"></i> Giới thiệu
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#!lienhe" class="nav-link">
+                <i class="fas fa-envelope"></i> Liên hệ
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#!gopy" class="nav-link">
+                <i class="fas fa-paper-plane"></i> Góp ý
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#!hoidap" class="nav-link">
+                <i class="far fa-question-circle"></i> Hỏi đáp
+              </a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button"
+               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-user"></i> {{name}}
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a href="javascript:void(0)" onclick="openLoginModal();" data-toggle="modal"
+                 class="dropdown-item">
+                 <i class="fa fa-sign-in-alt"></i> Đăng nhập
+                </a>
+                <a href="javascript:void(0)" onclick="openRegisterModal();" data-toggle="modal"
+                 class="dropdown-item">
+                 <i class="fa fa-user-plus"></i> Đăng ký
+                </a>
+                <a href="javascript:void(0)" onclick="openForgotPasswordModal();" data-toggle="modal"
+                 class="dropdown-item">
+                 <i class="fa fa-unlock"></i> Quên mật khẩu
+                </a>
+                <div class="dropdown-divider"></div>
+                <a href="#!doithongtin/{{name}}" class="dropdown-item"><i class="fa fa-user-edit"></i> Cập nhật tài khoản</a>
+                <a href="#!doimatkhau" class="dropdown-item"><i class="fa fa-key"></i> Đổi mật khẩu</a>
+                <a href="#" class="dropdown-item" ng-click="dx()"><i class="fa fa-sign-out-alt"></i> Đăng xuất</a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </nav>
+
+    <!-- Modal -->
+    <div class="modal fade login" id="loginModal">
+      <div class="modal-dialog login animated">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Đăng Nhập</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          </div>
+          <div class="modal-body">
+            <div class="box">
+              <div class="content">
+                <div class="social">
+                  <a class="circle github" href="#"><i class="fab fa-github fa-fw"></i></a>
+                  <a class="circle google" href="#"><i class="fab fa-google-plus fa-fw"></i></a>
+                  <a class="circle facebook" href="#"><i class="fab fa-facebook fa-fw"></i></a>
+                </div>
+                <div class="division">
+                  <div class="line l"></div>
+                    <span>or</span>
+                  <div class="line r"></div>
+                </div>
+                <div class="form loginBox" ng-controller="dnCtrl">
+                  <form>
+                    <div class="form-label-group">
+                      <i class="fa fa-user fa-lg fa-fw"></i>
+                      <input type="text" ng-model="user" id="loginUser" class="form-control"
+                        placeholder="Nhập Username" required autofocus>
+                      <label for="loginUser">Nhập Username</label>
+                    </div>
+                
+                    <div class="form-label-group">
+                      <i class="fa fa-lock fa-lg fa-fw"></i>
+                      <input type="password" ng-model="pass" id="loginPassword" class="form-control"
+                        placeholder="Nhập mật khẩu" required>
+                      <label for="loginPassword">Nhập mật khẩu</label>
+                    </div>
+                
+                    <div class="custom-control custom-checkbox mb-3">
+                      <input type="checkbox" class="custom-control-input" id="customCheck1">
+                      <label class="custom-control-label" for="customCheck1">Ghi nhớ mật khẩu</label>
+                    </div>
+                    
+                    <div class="text-center">
+                      <button ng-click="dn()" class="btn btn-primary mt-3">
+                        <i class="fa fa-sign-in-alt"></i> Đăng nhập
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+            <div class="box">
+              <div class="content registerBox" ng-controller="dkCtrl" style="display: none;">
+                <div class="form">
+                  <form>
+                    <div class="form-label-group">
+                      <i class="fa fa-file-signature fa-lg fa-fw"></i>
+                      <input type="text" ng-model="fullname" id="inputName" class="form-control"
+                        placeholder="Tên của bạn" required>
+                      <label for="inputName">Tên của bạn</label>
+                    </div>
+  
+                    <div class="form-label-group">
+                      <i class="fa fa-user fa-lg fa-fw"></i>
+                      <input type="text" ng-model="username" id="registerUser" class="form-control" 
+                      placeholder="Username" required>
+                      <label for="registerUser">Username</label>
+                    </div>
+  
+                    <div class="form-label-group">
+                      <i class="fa fa-envelope fa-lg fa-fw"></i>
+                      <input type="email" ng-model="email" id="registerEmail" class="form-control" 
+                      placeholder="Email" required>
+                      <label for="registerEmail">Email</label>
+                    </div>
+                    
+                    <div class="form-label-group">
+                      <select name="gender" ng-model="gender" id="gender">
+                        <option selected value="true">Nam</option>
+                        <option value="false">Nữ</option>
+                      </select>
+                    </div>
+  
+                    <div class="form-label-group">
+                      <i class="fa fa-lock fa-lg fa-fw"></i>
+                      <input type="password" ng-model="p" id="registerPassword" class="form-control" 
+                      placeholder="Nhập mật khẩu" required>
+                      <label for="registerPassword">Nhập mật khẩu</label>
+                    </div>
+                    
+                    <div class="form-label-group">
+                      <i class="fa fa-lock fa-lg fa-fw"></i>
+                      <input type="password" ng-model="password" id="registerConfirmPassword" class="form-control"
+                        placeholder="Nhập lại mật khẩu" required>
+                      <label for="registerConfirmPassword">Nhập lại mật khẩu</label>
+                    </div>
+                    
+                    <div class="text-center">
+                      <button type="submit" ng-click="dk()" class="btn btn-primary mt-3">
+                        <i class="fa fa-check"></i> Đăng ký
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+            <div class="box">
+              <div class="content forgotPasswordBox" ng-controller="qmkCtrl" style="display: none;">
+                <div class="form">
+                  <form>
+                    <div class="form-label-group">
+                      <i class="fa fa-envelope fa-lg fa-fw"></i>
+                      <input type="email" ng-model="email" id="inputConfirmEmail" class="form-control"
+                        placeholder="Vui lòng nhập Email" required>
+                      <label for="inputConfirmEmail">Vui lòng nhập Email</label>
+                    </div>
+      
+                    <div class="text-center">
+                      <button type="submit" ng-click="qmk()" class="btn btn-primary mt-3">
+                        <i class="fa fa-paper-plane"></i> Xác nhận
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <div class="forgot login-footer">
+              <span><a href="javascript: showRegisterForm();">Đăng ký</a></span>
+            </div>
+            <div class="forgot forgot-password-footer">
+              <span><a href="javascript: showForgotPasswordForm();">Quên mật khẩu</a></span>
+            </div>
+            <div class="forgot register-footer">
+              <span><a href="javascript: showLoginForm();">Đăng nhập</a></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--Content-->
+    <div class="row">
+      <article class="col-sm-8" ng-view></article>
+
+      <aside class="col-sm-4">
+        <div class="card mt-2 ml-n3 mr-n3">
+          <div class="card-header text-uppercase font-weight-bold">
+            <i class="fas fa-list fa-lg"></i> Danh mục
+          </div>
+          <div class="card-body p-0">
+            <ul class="list-group">
+              <li class="list-group-item" ng-repeat="sub in subjects">
+                <a href="#!tracnghiem/{{sub.Id}}/{{sub.Name}}">{{sub.Name}}</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </aside>
+    </div>
+    <footer class="row bg-dark">
+      <p class="m-auto text-white text-center font-weight-bold">PS12496 - Dương Ngọc Đạm <br> Email: damdnps12496@fpt.edu.vn</p>
+    </footer>
+  </div>
+<script type="text/javascript">
+	$(document).ready(function(){
+		openLoginModal();
+	});
+</script>
+</body>
+</html>
+<script src="js/modal.js"></script>
+<script src="myapp.js"></script>
+<script src="js/jquery-3.6.0.min.js"></script>
+<script src="js/popper.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="db/Students.js"></script>

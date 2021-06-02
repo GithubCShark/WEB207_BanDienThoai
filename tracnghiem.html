@@ -1,0 +1,47 @@
+<style>
+  .pagination {
+    display: inline-block;
+  }
+
+  .card .row {margin-right: 0; margin-left: 0;}
+
+  .pagination a {
+    background-color: #fff;
+    color: black;
+    font-weight: bold;
+    float: left;
+    padding: 12px 20px;
+    margin: 10px;
+    text-decoration: none;
+    transition: background-color .3s;
+    border: 1px solid #ddd;
+  }
+
+  .pagination a:hover {background-color: #ddd;}
+</style>
+
+<div class="row mx-2 my-2">
+  <div class="card w-100" ng-repeat="q in question |limitTo:1:start">
+    <div class="card-header row text-uppercase font-weight-bold bg-primary">
+      <div class="col-10 text-white">
+        {{tenSubj}}
+      </div>
+      <div class="col-2 text-warning">{{minutes}} : {{seconds}}</div>
+    </div>
+    <div class="card-body">
+      <p>{{start+1}}. {{q.Text}}</p>
+      <hr>
+      <input type="hidden" value="{{q.AnswerId}}" id="dapAn">
+      <p class="card-text" ng-repeat="an in q.Answers">
+          <input type="radio" name="radio" value="{{an.Id}}" ng-model="traloi.checked"> {{an.Text}}
+      </p>
+      <input type="hidden" id="cauTraLoi" value="{{traloi.checked}}">
+    </div>
+    <div class="card-footer text-muted">MARKS: {{marks}}/{{all}}</div>
+  </div>
+  
+  <div class="pagination mt-2 mx-auto">
+    <button class="btn btn-danger mx-2" ng-click="Check()"><i class="fa fa-check-circle"></i> Check</button>
+    <button class="btn btn-info ml-2" ng-click="Submit()"><i class="fas fa-angle-right"></i> Nộp Bài</button>
+  </div>
+</div>
